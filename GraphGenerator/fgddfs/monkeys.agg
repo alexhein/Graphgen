@@ -1,0 +1,11 @@
+Monkey = { andy, bobby, charly, dobby}
+
+type(feeds(Monkey, Monkey))
+type(hungry(Monkey))
+
+
+(feeds(X, Y) | !hungry(X), hungry(Y))[0.80]
+( !feeds(X, Y) | hungry(X))[0.999]
+( !feeds(X, Y) | !hungry(X),!hungry(Y))[0.90]
+(feeds(X, charly) | !hungry(X))[0.95]
+(feeds(X, X))[0.001]
