@@ -6,12 +6,22 @@ package de.alexhein.graphgenerator.graph;
 import java.util.Set;
 
 /**
- * @author alex
+ * @author Alexander Hein
+ * 
  *
  */
+
 public interface UndirectedGraph<T> {
 	
-	public boolean contains(T node);
+	/**
+	 * @param node 
+	 * Node of type <T> to be inserted
+	 * @return
+	 * true iff the Graph does not already contains node
+	 */
+	public boolean containsNode(T node);
+	
+	public boolean containsEdge(T node1, T node2);
 	public boolean adjacent(T node1, T node2);
 	
 	public boolean addNode(T node);

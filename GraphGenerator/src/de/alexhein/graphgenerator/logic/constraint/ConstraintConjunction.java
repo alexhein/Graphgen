@@ -44,13 +44,13 @@ public class ConstraintConjunction implements Constraint {
 	
 	@Override
 	public String toString() {
-		String str = "(";
+		String str = "";
 		Iterator<Constraint> it = cstrs.iterator();
 		if(it.hasNext()) 
 			str = str + it.next().toString();
 		while(it.hasNext())
 			str = str + "," + it.next().toString();
-		str = str + ")";
+	
 		return str;
 	}
 

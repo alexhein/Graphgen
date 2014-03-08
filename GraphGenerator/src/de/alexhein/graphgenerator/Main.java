@@ -15,6 +15,9 @@ import de.alexhein.graphgenerator.logic.scopes.Variable;
 import de.alexhein.graphgenerator.logic.scopes.VariableScope;
 import de.alexhein.graphgenerator.parsers.mecore.*;
 import de.alexhein.graphgenerator.parsers.agg.*;
+import de.alexhein.graphgenerator.parsers.fopcl.FopclKBBuilder;
+import de.alexhein.graphgenerator.parsers.fopcl.FopclgrammarLexer;
+import de.alexhein.graphgenerator.parsers.fopcl.FopclgrammarParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +58,7 @@ public class Main {
 		
 		*/
 		
-		
+	/*	
 		File f = new File("/home/alex/workspace/GraphGenerator/fgddfs/elephants.agg");
 		InputStream is = null;
 		ANTLRInputStream input = null;
@@ -76,20 +79,41 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		AgggrammarParser parser = new AgggrammarParser(tokens);
 		ParseTree tree = parser.aggsig(); // parse; start at prog
-		// System.out.println(tree.toStringTree(parser));
+	
 		AggKBBuilder mkb = new AggKBBuilder();
 		ProbCondKnowBase kb = (ProbCondKnowBase) mkb.visit(tree);
 	//	System.out.println(kb.toString());
 	//	System.out.println(kb.ground().toString());
 		
 		RelTypeScope rts = kb.getRelTypeScope();
+		*/
 		
-		//System.out.println(rts.unCode(4).toString());
+		File f = new File("/home/alex/git/ggen/GraphGenerator/fgddfs/ex01.fopcl");
+		InputStream is = null;
+		ANTLRInputStream input = null;
+		try {
+		    is = new FileInputStream(f);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			input = new ANTLRInputStream(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		FopclgrammarLexer lexer = new FopclgrammarLexer(input);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		FopclgrammarParser parser = new FopclgrammarParser(tokens);
+		ParseTree tree = parser.fopclsig(); // parse; start at prog
+	
+		FopclKBBuilder mkb = new FopclKBBuilder();
+		ProbCondKnowBase kb = (ProbCondKnowBase) mkb.visit(tree);
+		System.out.println(kb.toString());
+	//	System.out.println(kb.ground().toString());	
 		
-		//for(int i=0; i<kb.getRelTypeScope().getTotalSize(); i++)
-		//	System.out.println(rts.unCode(i).toString());
-		
-		System.out.println(kb.toGraph().toGraphVizFormat());
 		
 		
 		/*

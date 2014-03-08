@@ -78,6 +78,8 @@ public class ConstraintNotEqual implements Constraint {
 				str = str + it.next().toString();
 			while(it.hasNext())
 				str = str + "," + it.next().toString();
+			
+			str = str + ")";
 		}
 		return str;
 	}

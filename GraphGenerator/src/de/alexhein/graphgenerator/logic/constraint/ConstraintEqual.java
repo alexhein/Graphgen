@@ -17,7 +17,7 @@ public class ConstraintEqual implements Constraint {
 	private final Variable var1, var2;
 	private final Collection<Constant> cset;
 	
-	ConstraintEqual(Variable leftarg, Variable rightarg){
+	public ConstraintEqual(Variable leftarg, Variable rightarg){
 		this.var1 = leftarg;
 		this.var2 = rightarg;	
 		cset = null;
@@ -69,6 +69,7 @@ public class ConstraintEqual implements Constraint {
 				str = str + it.next().toString();
 			while(it.hasNext())
 				str = str + "," + it.next().toString();
+			str = str + ")";
 		}
 		return str;
 	}
