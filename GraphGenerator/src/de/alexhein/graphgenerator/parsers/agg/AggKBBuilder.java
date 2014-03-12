@@ -316,7 +316,7 @@ public class AggKBBuilder extends AgggrammarBaseVisitor<Object> {
 	
 	@Override 
 	public String[] visitSorts(AgggrammarParser.SortsContext ctx) { 
-		List<Sort_idContext> l = ctx.sort_id();
+		List<Sort_idContext> l = ctx.sort_id(); 
 		Iterator<Sort_idContext> i = l.iterator();
 		String[] s = new String[l.size()];
 		int c = 0;

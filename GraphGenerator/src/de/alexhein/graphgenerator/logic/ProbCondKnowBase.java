@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import de.alexhein.graphgenerator.graph.RestrictedGraph;
+
+import de.alexhein.graphgenerator.graph.UndGraphHashed;
 import de.alexhein.graphgenerator.graph.UndirectedGraph;
 import de.alexhein.graphgenerator.logic.scopes.*;
 
@@ -71,11 +72,12 @@ public class ProbCondKnowBase {
 	}
 	
 	public UndirectedGraph<GroundRelation> toGraph() {
+		return new UndGraphHashed();
+		/*
 		UndirectedGraph<GroundRelation> g = new RestrictedGraph<GroundRelation>(this.reltypescope);
 		Iterator<ProbConstrConditional> it = forms.iterator();
 		while (it.hasNext())
-			g.addClique(it.next().getAllGroundedRelations());
-		
+			g.addClique(it.next().getAllGroundedRelations());*/
 		return g;
 	}
 	

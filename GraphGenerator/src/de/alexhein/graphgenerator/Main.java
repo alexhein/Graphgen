@@ -3,6 +3,9 @@ package de.alexhein.graphgenerator;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import de.alexhein.graphgenerator.graph.UndGraphHashed;
+import de.alexhein.graphgenerator.graph.UndirectedGraph;
+import de.alexhein.graphgenerator.graph.triangulation.SimpleNodeElimTriangulator;
 import de.alexhein.graphgenerator.logic.InstantiationSet;
 import de.alexhein.graphgenerator.logic.ProbCondKnowBase;
 import de.alexhein.graphgenerator.logic.Relation;
@@ -111,8 +114,32 @@ public class Main {
 	
 		FopclKBBuilder mkb = new FopclKBBuilder();
 		ProbCondKnowBase kb = (ProbCondKnowBase) mkb.visit(tree);
-		System.out.println(kb.toString());
+	//	System.out.println(kb.toString());
 	//	System.out.println(kb.ground().toString());	
+		
+		UndirectedGraph<String> tg = new UndGraphHashed<String>();
+		String a = "A";
+		String b = "B";
+		String c = "C";
+		String d = "D";
+		String e = "E";
+	
+		String g = "G";
+		
+		
+		tg.addEdge(a, b);
+		tg.addEdge(b, d);
+		tg.addEdge(a, c);
+		tg.addEdge(c, d);
+		
+		System.out.println(tg.getNumberOfNodes() + " " + tg.getNumberOfEdges());
+		System.out.println(tg);
+		
+		SimpleNodeElimTriangulator snet = new SimpleNodeElimTriangulator();
+	
+		
+		System.out.println(snet.triangulate(tg));
+		
 		
 		
 		
