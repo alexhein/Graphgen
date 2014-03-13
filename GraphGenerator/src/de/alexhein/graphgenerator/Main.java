@@ -3,8 +3,11 @@ package de.alexhein.graphgenerator;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
-import de.alexhein.graphgenerator.graph.UndGraphHashed;
-import de.alexhein.graphgenerator.graph.UndirectedGraph;
+import de.alexhein.graphgenerator.graph.UndirGraph;
+import de.alexhein.graphgenerator.graph.UndirGraphHashed;
+import de.alexhein.graphgenerator.graph.datastructures.UndGraphHashed;
+import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
+import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph.Edge;
 import de.alexhein.graphgenerator.graph.triangulation.SimpleNodeElimTriangulator;
 import de.alexhein.graphgenerator.logic.InstantiationSet;
 import de.alexhein.graphgenerator.logic.ProbCondKnowBase;
@@ -117,7 +120,7 @@ public class Main {
 	//	System.out.println(kb.toString());
 	//	System.out.println(kb.ground().toString());	
 		
-		UndirectedGraph<String> tg = new UndGraphHashed<String>();
+		UndirGraph<String, Integer> tg = new UndirGraphHashed<String, Integer>();
 		String a = "A";
 		String b = "B";
 		String c = "C";
@@ -127,18 +130,22 @@ public class Main {
 		String g = "G";
 		
 		
-		tg.addEdge(a, b);
-		tg.addEdge(b, d);
-		tg.addEdge(a, c);
-		tg.addEdge(c, d);
+		tg.addEdge(a, b, 1);
+		tg.addEdge(b, d, 2);
+		tg.addEdge(a, c, 3);
+		tg.addEdge(c, d, 4);
+		
+		tg.removeEdge(a, b);
+		
+		
 		
 		System.out.println(tg.getNumberOfNodes() + " " + tg.getNumberOfEdges());
 		System.out.println(tg);
 		
-		SimpleNodeElimTriangulator snet = new SimpleNodeElimTriangulator();
+		
 	
 		
-		System.out.println(snet.triangulate(tg));
+		
 		
 		
 		
@@ -167,6 +174,7 @@ public class Main {
 			System.out.println(i.next().toString());
 		*/
 		
+		UndirGraph<String, ?> fd = new UndirGraphHashed<String, Object>();
 		
 	}
 

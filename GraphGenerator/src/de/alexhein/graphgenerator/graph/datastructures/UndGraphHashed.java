@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.alexhein.graphgenerator.graph;
+package de.alexhein.graphgenerator.graph.datastructures;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -33,10 +33,11 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 		for(S n : g.getNodes())
 			this.addNode(n);
 		
-		Iterator<S> it;
-		for(Set<S> e : g.getEdges()) {
-			it = e.iterator();
-			this.addEdge(it.next(), it.next());			
+		
+		
+		
+		for(Edge<S> e : g.getEdges()) {
+			this.addEdge(e.getFirstNode(), e.getSecondNode());			
 		}	
 	}
 	
@@ -97,6 +98,7 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 		if(!nodes.contains(node))
 			return false;
 		else {
+				
 			Set<T> neighb = edges.get(node);
 			for(T n : neighb) {
 				edges.get(n).remove(node);
@@ -137,23 +139,20 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 	}
 
 	@Override
-	public Set<Set<T>> getEdges() {
-		Set<Set<T>> es = new HashSet<Set<T>>();
+	public Set<Edge<T>> getEdges() {
+		
+		Set<Edge<T>> eset = new HashSet<Edge<T>>();
 		
 		Set<T> visited = new HashSet<T>();
 		for(T n : this.nodes) {
 			visited.add(n);
 			for(T m : edges.get(n)) {
 				if(!visited.contains(m)) {
-					Set<T> s = new HashSet<T>();
-					s.add(n);
-					s.add(m);
-					es.add(s);
-				}
-				
+					eset.add(new Edge<T>(n,m));
+				}			
 			}
 		}
-		return es;
+		return eset;
 	}
 	
 	@Override
@@ -184,21 +183,19 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 		str = str + "}\n";
 		
 		str = str + "Edges: {";
-		Iterator<Set<T>> ite = this.getEdges().iterator();
-		Iterator<T> it;
-		if(ite.hasNext()) {
-			it = ite.next().iterator();
-			str = str + "(" + it.next() + "," + it.next() + ")";
-		}
-		while(ite.hasNext()) {
-			it = ite.next().iterator();
-			str = str + ", " + "(" + it.next() + "," + it.next() + ")";
-		}
+		Iterator<Edge<T>> eit = this.getEdges().iterator();
+		if(eit.hasNext())
+			str = str + eit.next();
+		
+		while(eit.hasNext())
+			str = " ," + eit.next();
+		
 		str = str + "}";
 		
 		return str;
 	}
 
+	
 
 
 }

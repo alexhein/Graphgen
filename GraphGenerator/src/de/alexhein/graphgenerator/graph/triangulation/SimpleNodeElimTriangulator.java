@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import de.alexhein.graphgenerator.graph.UndGraphHashed;
-import de.alexhein.graphgenerator.graph.UndirectedGraph;
+import de.alexhein.graphgenerator.graph.datastructures.UndGraphHashed;
+import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
 
 /**
  * @author alex

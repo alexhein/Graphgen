@@ -3,6 +3,9 @@
  */
 package de.alexhein.graphgenerator.graph;
 
+import de.alexhein.graphgenerator.graph.datastructures.UndGraphHashed;
+import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
+
 /**
  * @author alex
  *

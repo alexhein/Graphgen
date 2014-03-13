@@ -3,7 +3,7 @@
  */
 package de.alexhein.graphgenerator.graph.triangulation;
 
-import de.alexhein.graphgenerator.graph.UndirectedGraph;
+import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
 
 /**
  * @author Alexander Hein
