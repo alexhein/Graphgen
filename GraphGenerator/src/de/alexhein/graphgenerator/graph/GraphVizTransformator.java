@@ -11,7 +11,11 @@ import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
  *
  */
 public interface GraphVizTransformator {
-	public String toGraphViz(UndirectedGraph<?> g);
+	
 
 	public String toGraphViz(UndGraphHashed<?> g);
+
+	<T> String toGraphViz(UndirectedGraph<T> g);
+	
+	
 }

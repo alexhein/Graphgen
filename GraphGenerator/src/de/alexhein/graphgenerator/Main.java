@@ -3,11 +3,13 @@ package de.alexhein.graphgenerator;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
-import de.alexhein.graphgenerator.graph.UndirGraph;
-import de.alexhein.graphgenerator.graph.UndirGraphHashed;
-import de.alexhein.graphgenerator.graph.datastructures.UndGraphHashed;
-import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
-import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph.Edge;
+import de.alexhein.graphgenerator.graph.GraphVizTransformator;
+import de.alexhein.graphgenerator.graph.SimpleGVViz;
+import de.alexhein.graphgenerator.graph.algorithms.CliqueGraphComp;
+import de.alexhein.graphgenerator.graph.algorithms.MSTComp;
+import de.alexhein.graphgenerator.graph.algorithms.MSTKruskal;
+import de.alexhein.graphgenerator.graph.algorithms.WeightMapper;
+import de.alexhein.graphgenerator.graph.datastructures.*;
 import de.alexhein.graphgenerator.graph.triangulation.SimpleNodeElimTriangulator;
 import de.alexhein.graphgenerator.logic.InstantiationSet;
 import de.alexhein.graphgenerator.logic.ProbCondKnowBase;
@@ -36,8 +38,8 @@ import java.util.Iterator;
 public class Main {
 
 	public static void main(String[] args) {
-		/*
-		File f = new File("/home/alex/workspace/GraphGenerator/fgddfs/BT.mecore");
+		
+		File f = new File("/home/alex/git/ggen/GraphGenerator/fgddfs/BT.mecore");
 		InputStream is = null;
 		ANTLRInputStream input = null;
 		try {
@@ -62,7 +64,7 @@ public class Main {
 	//	System.out.println(kb.toString());
 	//	System.out.println(kb.ground().toString());
 		
-		*/
+		
 		
 	/*	
 		File f = new File("/home/alex/workspace/GraphGenerator/fgddfs/elephants.agg");
@@ -93,7 +95,7 @@ public class Main {
 		
 		RelTypeScope rts = kb.getRelTypeScope();
 		*/
-		
+	/*	
 		File f = new File("/home/alex/git/ggen/GraphGenerator/fgddfs/ex01.fopcl");
 		InputStream is = null;
 		ANTLRInputStream input = null;
@@ -117,33 +119,61 @@ public class Main {
 	
 		FopclKBBuilder mkb = new FopclKBBuilder();
 		ProbCondKnowBase kb = (ProbCondKnowBase) mkb.visit(tree);
+		*/
+		
+		GraphVizTransformator gvt = new SimpleGVViz();
+		System.out.println(gvt.toGraphViz(kb.toGraph()));
 	//	System.out.println(kb.toString());
 	//	System.out.println(kb.ground().toString());	
 		
-		UndirGraph<String, Integer> tg = new UndirGraphHashed<String, Integer>();
-		String a = "A";
-		String b = "B";
-		String c = "C";
-		String d = "D";
-		String e = "E";
-	
-		String g = "G";
-		
-		
-		tg.addEdge(a, b, 1);
-		tg.addEdge(b, d, 2);
-		tg.addEdge(a, c, 3);
-		tg.addEdge(c, d, 4);
-		
-		tg.removeEdge(a, b);
-		
-		
-		
-		System.out.println(tg.getNumberOfNodes() + " " + tg.getNumberOfEdges());
-		System.out.println(tg);
-		
-		
-	
+//		UndirectedGraphEdged<String, Integer> tg = new UndEdgeGraphHashed<String, Integer>();
+//		String a = "A";
+//		String b = "B";
+//		String c = "C";
+//		String d = "D";
+//		String e = "E";
+//	
+//		String g = "G";
+//		String h = "H";
+//		String i = "I";
+//
+//		
+//		
+//		tg.addEdge(a, b, 1);
+//		tg.addEdge(b, d, 2);
+//		tg.addEdge(a, c, 3);
+//		tg.addEdge(c, d, 4);
+//		tg.addEdge(b, e);
+//		tg.addEdge(e, g);
+//		tg.addEdge(b, h);
+//		tg.addEdge(e, h);
+//		tg.addEdge(e, i);
+//		
+//		CliqueGraphComp cgc = new CliqueGraphComp();
+//		Iterator<String> l = cgc.getNodeElimOrder(tg).iterator();
+//		while(l.hasNext())
+//			System.out.print(" " + l.next());
+//		
+//		System.out.println("\n _________");
+//	
+//		
+//		UndirectedGraphEdged<String, Integer> mst;
+//		MSTComp mstc = new MSTKruskal();
+//		mst = mstc.computeMaxST(tg, new WeightMapper<Integer>(){
+//				public double getWeight(Integer x) {
+//					double ddd = x.intValue();
+//					return ddd;
+//				}}
+//				 );
+//		
+//	
+//		
+//		System.out.println(tg.getNumberOfNodes() + " " + tg.getNumberOfEdges());
+//		System.out.println(tg);
+//	
+//		System.out.println(mst);
+//		
+//	
 		
 		
 		
@@ -174,7 +204,7 @@ public class Main {
 			System.out.println(i.next().toString());
 		*/
 		
-		UndirGraph<String, ?> fd = new UndirGraphHashed<String, Object>();
+	
 		
 	}
 

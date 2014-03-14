@@ -1,0 +1,220 @@
+
+
+#Variablendeklaration fuer Hirntumordiagnose
+var null, 
+    pilozytischesastrozytom, 
+    diffusesastrozytom, 
+    anaplastischesastrozytom,
+    glioblastom,
+    oligodendrogliom,
+    ependymom,
+    meningeom,
+    medulloblastom,
+    hirnnervtumor, 
+    metastase
+  -> diagnose;
+
+#Variablendefinition fuer Patientenalter
+var kind, 
+    jmerwachsen,
+    greise
+    -> alter;
+
+
+
+#vardiablendefinition fuer akuten Symptomverlauf
+var ->akutersymptomverlauf;
+
+#Variablendefinition fuer Mrt-Kriterien bei Gliomen
+var null, grad1, grad2, grad3, grad4 -> gliombildgebung;
+
+
+#Variabeldefinition fuer Hirndruckzeichen in der Bildgebung
+var ->hirndruckzeichen;
+
+
+#Variablendefinition fuer Vorerkrankungen
+var asa1,
+    asa2,
+    asa3,
+    asa4
+    ->vorerkrankungen; 
+
+#Variablendefinition fuer Behandlungsmueglichkeiten
+var null,
+    kons,
+    op
+    ->behandlung; 
+
+
+#Variablendefinition fuer Kompliaktionen
+var einsk,
+    zweik,
+    dreik
+    ->komplikation; 
+
+#Variablendefinition fuer Prognose
+var sgut, gut, mittel, schlecht, sschlecht -> prognose;
+
+     
+
+#          REGELN       REGELN      REGELN      REGELN  
+
+
+    #Hirntumordiagnose und Einfluesse darauf
+
+    ####Einfluss Alter auf tumordiagnose
+    (diagnose=glioblastom | (!(alter=kind)))[0.15],     
+    (diagnose=pilozytischesastrozytom | alter=kind)[0.35],     
+    (diagnose=diffusesastrozytom| (!(alter=kind)))[0.1],    
+    (diagnose=anaplastischesastrozytom| (!(alter=kind)))[0.1],     
+    (diagnose=oligodendrogliom| (!(alter=kind)))[0.1],     
+    (diagnose=ependymom| (!(alter=kind)))[0.04],
+    (diagnose=ependymom| alter=kind)[0.08],     
+    (diagnose=meningeom| (!(alter=kind)))[0.2],      
+    (diagnose=medulloblastom| (!(alter=kind)))[0.07],  
+    (diagnose=medulloblastom| alter=kind)[0.25],      
+    (diagnose=hirnnervtumor| (!(alter=kind)))[0.07],     
+    (diagnose=metastase| (!(alter=kind)))[0.1],   
+
+    #####spezielle Einfluesse auf Hirntumordiagnose Glioblastom
+        (diagnose=glioblastom | (!(alter=kind)) and akutersymptomverlauf)[0.2],
+        (diagnose=glioblastom | (!(alter=kind)) and hirndruckzeichen)[0.2], 
+        (diagnose=glioblastom | (!(alter=kind)) and gliombildgebung=grad4)[0.4],
+        (diagnose=glioblastom | (!(alter=kind)) and gliombildgebung=grad3)[0.1],
+        (diagnose=glioblastom | (!(alter=kind)) and gliombildgebung=grad2)[0.05],
+        (diagnose=glioblastom | (!(alter=kind)) and gliombildgebung=grad1)[0.01],
+
+
+    ####spezielle Einfluesse auf Hirntumordiagnose pilozytisches Astrozytom und andere Gliome
+        (diagnose=pilozytischesastrozytom | alter=kind and gliombildgebung=grad1)[0.6],
+        (diagnose=pilozytischesastrozytom | alter=kind and gliombildgebung=grad2)[0.35],
+        (diagnose=pilozytischesastrozytom | alter=kind and gliombildgebung=grad3)[0.1],
+        (diagnose=pilozytischesastrozytom | alter=kind and gliombildgebung=grad4)[0.05],
+        (diagnose=ependymom | ((alter=kind)) and (gliombildgebung=grad1 or gliombildgebung=grad2))[0.2],
+        (diagnose=pilozytischesastrozytom | (!(alter=kind)) and (gliombildgebung=grad1 or gliombildgebung=grad2))[0.2],
+        (diagnose=diffusesastrozytom| (!(alter=kind)) and (gliombildgebung=grad1 or gliombildgebung=grad2))[0.2],
+        (diagnose= anaplastischesastrozytom | (!(alter=kind)) and (gliombildgebung=grad3 
+         or gliombildgebung=grad4))[0.2],
+        (diagnose=oligodendrogliom| (!(alter=kind)) and (gliombildgebung=grad1 or gliombildgebung=grad2))[0.2],
+        (diagnose=ependymom| (!(alter=kind)) and (gliombildgebung=grad1 or gliombildgebung=grad2))[0.1],
+        
+             
+
+    #####spezielle Einfluesse auf Hirntumordiagnose medulloblastom
+         (diagnose=medulloblastom| alter=kind and akutersymptomverlauf)[0.35],
+
+
+  #Alterverteilung in Deutschland, 2009
+   (alter=kind)[0.15],
+   (alter=jmerwachsen)[0.62],
+  
+   
+  #Einfluesse auf Komplikationen
+  (komplikation=einsk)[0.95],
+  (komplikation=zweik|alter=greise)[0.1], 
+  (komplikation=zweik|behandlung=op)[0.1],
+  (komplikation=zweik|vorerkrankungen=asa2)[0.05],
+  (komplikation=zweik|vorerkrankungen=asa3)[0.1],
+  (komplikation=zweik|vorerkrankungen=asa4)[0.15],
+  (komplikation=zweik|hirndruckzeichen)[0.15],
+  (komplikation=zweik|akutersymptomverlauf)[0.1],
+
+  (komplikation=dreik|alter=greise)[0.1], 
+  (komplikation=dreik|behandlung=op)[0.1],
+  (komplikation=dreik|behandlung=op and alter=greise)[0.4], 
+  (komplikation=dreik|vorerkrankungen=asa2)[0.1],
+  (komplikation=dreik|vorerkrankungen=asa3)[0.2],
+  (komplikation=dreik|vorerkrankungen=asa4)[0.3],
+  (komplikation=dreik|hirndruckzeichen)[0.1],
+  (komplikation=dreik|akutersymptomverlauf)[0.2],
+
+
+  #Einfluss Hirntumordiagnose auf Prognose
+  (prognose=mittel|diagnose=pilozytischesastrozytom)[0.7],
+  (prognose=sgut|diagnose=pilozytischesastrozytom)[0.05],
+  (prognose=gut|diagnose=pilozytischesastrozytom)[0.1],
+  (prognose=schlecht|diagnose=pilozytischesastrozytom)[0.1], 
+  (prognose=sschlecht|diagnose=pilozytischesastrozytom)[0.05],  
+  
+
+  (prognose=mittel|diagnose=oligodendrogliom)[0.7],
+  (prognose=sgut|diagnose=oligodendrogliom)[0.05],
+  (prognose=gut|diagnose=oligodendrogliom)[0.1],
+  (prognose=schlecht|diagnose=oligodendrogliom)[0.1],
+  (prognose=sschlecht|diagnose=oligodendrogliom)[0.05],
+ 
+
+
+  (prognose=schlecht|diagnose=diffusesastrozytom)[0.5],
+  (prognose=mittel|diagnose=diffusesastrozytom)[0.35],
+  (prognose=sgut|diagnose=diffusesastrozytom)[0.03],
+  (prognose=gut|diagnose=diffusesastrozytom)[0.05],
+  (prognose=sschlecht|diagnose=diffusesastrozytom)[0.07],
+
+
+  (prognose=schlecht|diagnose=anaplastischesastrozytom)[0.7],
+  (prognose=sschlecht|diagnose=anaplastischesastrozytom)[0.15],
+  (prognose=sgut|diagnose=anaplastischesastrozytom)[0.01],
+  (prognose=gut|diagnose=anaplastischesastrozytom)[0.04],
+  (prognose=mittel|diagnose=anaplastischesastrozytom)[0.1],
+
+
+  (prognose=sschlecht|diagnose=glioblastom)[0.9],
+  (prognose=schlecht|diagnose= glioblastom)[0.05],
+  (prognose=sgut|diagnose= glioblastom)[0.001],
+  (prognose=gut|diagnose= glioblastom)[0.009],
+  (prognose=mittel|diagnose= glioblastom)[0.04],
+  
+  
+
+
+  (prognose=schlecht|diagnose=ependymom)[0.55],  
+  (prognose=mittel|diagnose=ependymom)[0.25],
+  (prognose=sgut|diagnose=ependymom)[0.05],
+  (prognose=gut|diagnose=ependymom)[0.1],
+  (prognose=sschlecht|diagnose=ependymom)[0.05],
+
+ 
+  (prognose=sgut|diagnose=meningeom)[0.8],
+  (prognose=gut|diagnose=meningeom)[0.1],
+  (prognose=mittel|diagnose=meningeom)[0.03],
+  (prognose=schlecht|diagnose=meningeom)[0.05],
+  (prognose=sschlecht|diagnose=meningeom)[0.02],
+
+
+  (prognose=mittel|diagnose=medulloblastom and (!(alter=kind)))[0.5],  
+  (prognose=schlecht|diagnose=medulloblastom and (!(alter=kind)))[0.3],
+  (prognose=sgut|diagnose=medulloblastom and (!(alter=kind)))[0.05],
+  (prognose=gut|diagnose=medulloblastom and (!(alter=kind)))[0.05],
+  (prognose=sschlecht|diagnose=medulloblastom and (!(alter=kind)))[0.1],
+
+  (prognose=gut|diagnose=medulloblastom and alter=kind)[0.7],
+  (prognose=sgut|diagnose=medulloblastom and alter=kind)[0.1],
+  (prognose=mittel|diagnose=medulloblastom and alter=kind)[0.1],
+  (prognose=schlecht|diagnose=medulloblastom and alter=kind)[0.05],
+  (prognose=sschlecht|diagnose=medulloblastom and alter=kind)[0.05],
+
+  
+  (prognose=sgut|diagnose=hirnnervtumor)[0.6],
+  (prognose=gut|diagnose=hirnnervtumor)[0.2],  
+  (prognose=mittel|diagnose=hirnnervtumor)[0.05],  
+  (prognose=schlecht|diagnose=hirnnervtumor)[0.1],  
+  (prognose=sschlecht|diagnose=hirnnervtumor)[0.05],  
+  
+  (prognose=sschlecht|diagnose=metastase)[0.8],
+  (prognose=sgut|diagnose=metastase)[0.01],
+  (prognose=gut|diagnose=metastase)[0.01],
+  (prognose=mittel|diagnose=metastase)[0.05],
+  (prognose=schlecht|diagnose=metastase)[0.13],
+
+  #Einfluss von drittgradigen Komplikationen auf Prognose
+  (prognose=sgut|komplikation=dreik)[0.10],
+  (prognose=gut|komplikation=dreik)[0.05],
+  (prognose=mittel|komplikation=dreik)[0.15],
+  (prognose=schlecht|komplikation=dreik)[0.3],
+  (prognose=sschlecht|komplikation=dreik)[0.4]
+
+    
+
+

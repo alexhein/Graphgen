@@ -1,0 +1,10 @@
+
+
+Elephant = { clyde, dumbo, nirvan}
+Keeper = {fred, paul, simon}
+
+type(likes(Elephant, Keeper))
+
+(likes(E,K)) [0.9] [K != fred]
+(likes(E,fred)) [0.05] [E != clyde]
+(likes(clyde,fred)) [1.0]

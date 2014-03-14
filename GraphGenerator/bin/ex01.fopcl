@@ -1,0 +1,9 @@
+Elephant = { clyde, dumbo, nirvan}
+Keeper = {fred, paul, simon}
+
+likes(Elephant, Keeper)   
+
+
+<(likes(E,K) and not likes(E,K) | likes(E,K)) [0.9 ], K != fred > 
+<(likes(E,fred) and likes(E,F))[0.05], E != clyde, clyde != E, E=F> 
+<(likes(clyde,fred))[1.0] > 

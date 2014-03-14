@@ -3,6 +3,7 @@
  */
 package de.alexhein.graphgenerator.graph.datastructures;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,7 +15,6 @@ import java.util.Set;
  *
  */
 public interface UndirectedGraph<T> {
-	
 	
 	class Edge<T>{
 		private final T node1, node2;
@@ -58,6 +58,8 @@ public interface UndirectedGraph<T> {
 		
 		
 	}
+	
+	
 	
 	/**
 	 * This method is used to determine if a given node is
@@ -121,7 +123,7 @@ public interface UndirectedGraph<T> {
 	public Set<Edge<T>> getEdges();
 	
 	 
-	
+
 	
 	
 	

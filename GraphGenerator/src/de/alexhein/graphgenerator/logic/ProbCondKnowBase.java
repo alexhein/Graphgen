@@ -6,6 +6,7 @@ package de.alexhein.graphgenerator.logic;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import de.alexhein.graphgenerator.graph.datastructures.UndGraphHashed;
 import de.alexhein.graphgenerator.graph.datastructures.UndirectedGraph;
@@ -71,13 +72,17 @@ public class ProbCondKnowBase {
 	}
 	
 	public UndirectedGraph<GroundRelation> toGraph() {
-		return new UndGraphHashed();
-		/*
-		UndirectedGraph<GroundRelation> g = new RestrictedGraph<GroundRelation>(this.reltypescope);
-		Iterator<ProbConstrConditional> it = forms.iterator();
-		while (it.hasNext())
-			g.addClique(it.next().getAllGroundedRelations());*/
+		
+		UndirectedGraph<GroundRelation> g = new UndGraphHashed<GroundRelation>();
+		
+		for(ProbConstrConditional pcc : forms) {
+			Set<GroundRelation> grs = pcc.getAllGroundedRelations();
+			for(GroundRelation g1 : grs)
+				for(GroundRelation g2 : grs)
+					g.addEdge(g1, g2);
+		}
 		return g;
+		
 	}
 	
 	int getSize(){

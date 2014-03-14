@@ -29,21 +29,20 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 	 * @param <S>
 	 * 
 	 */
+	
+	public UndGraphHashed(){	
+	}
+	
 	public <S extends T> UndGraphHashed(UndirectedGraph<S> g) {
 		for(S n : g.getNodes())
 			this.addNode(n);
-		
-		
-		
-		
+			
 		for(Edge<S> e : g.getEdges()) {
 			this.addEdge(e.getFirstNode(), e.getSecondNode());			
 		}	
 	}
 	
-	public UndGraphHashed() {
-		
-	}
+	
 	
 	@Override
 	public boolean containsNode(T node) {
@@ -58,14 +57,16 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 	}
 	@Override
 	public boolean addNode(T node) {
+		if(this.nodecount == Integer.MAX_VALUE) 
+			return false;
 		if(node == null) return false;
 		if(nodes.contains(node))
 			return false;
 		else {
 			nodes.add(node);
 			edges.put(node, new HashSet<T>());
-			if(this.edgecount < Integer.MAX_VALUE)
-				nodecount++;
+			
+			nodecount++;
 			return true;
 		}
 	}
@@ -174,6 +175,7 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 
 	@Override 
 	public String toString() {
+		
 		String str = "Nodes: {";
 		Iterator<T> itn = this.nodes.iterator();
 		if(itn.hasNext())
@@ -188,12 +190,14 @@ public class UndGraphHashed<T> implements UndirectedGraph<T> {
 			str = str + eit.next();
 		
 		while(eit.hasNext())
-			str = " ," + eit.next();
+			str = str + " ," + eit.next();
 		
 		str = str + "}";
 		
 		return str;
 	}
+	
+	
 
 	
 
